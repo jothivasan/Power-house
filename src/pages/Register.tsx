@@ -1,0 +1,122 @@
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { supabase } from "../services/supabase";
+
+const REGISTRATION_SECRET_CODE = import.meta.env.VITE_REGISTRATION_SECRET_CODE || "";
+
+const Register = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [secretCode, setSecretCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    // Verify secret code first
+    if (secretCode !== REGISTRATION_SECRET_CODE) {
+      setError("INVALID SECRET CODE - ACCESS DENIED");
+      setLoading(false);
+      return;
+    }
+
+    // Fix: Property 'signUp' does not exist on type 'SupabaseAuthClient'. Casting to any for compatibility.
+    const { error } = await (supabase.auth as any).signUp({ email, password });
+    if (error) {
+      setError(error.message.toUpperCase());
+      setLoading(false);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-black px-4">
+      <div className="w-full max-w-md p-12 border border-white bg-black">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-black italic tracking-tighter uppercase mb-2">
+            Initialize
+          </h1>
+          <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.3em]">
+            Create Terminal Access
+          </p>
+        </div>
+
+        {error && (
+          <div className="mb-10 p-4 border border-red-500 text-red-500 text-[10px] font-black uppercase tracking-widest text-center">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleRegister} className="space-y-10">
+          <div>
+            <label className="block text-[9px] font-black text-zinc-500 mb-3 uppercase tracking-[0.3em]">
+              Secret Access Code
+            </label>
+            <input
+              type="text"
+              value={secretCode}
+              onChange={(e) => setSecretCode(e.target.value)}
+              className="w-full bg-black border border-white p-4 text-[11px] font-bold uppercase tracking-widest focus:bg-white focus:text-black transition-all text-white placeholder-zinc-800"
+              placeholder="ENTER_SECRET_CODE"
+              required
+              maxLength={6}
+            />
+            <p className="text-zinc-700 text-[8px] font-black uppercase tracking-wider mt-2">
+              ⚠️ RESTRICTED ACCESS - CODE REQUIRED
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-[9px] font-black text-zinc-500 mb-3 uppercase tracking-[0.3em]">
+              New Identity: Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-black border border-white p-4 text-[11px] font-bold uppercase tracking-widest focus:bg-white focus:text-black transition-all text-white placeholder-zinc-800"
+              placeholder="name@terminal.com"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-[9px] font-black text-zinc-500 mb-3 uppercase tracking-[0.3em]">
+              Set Security: Passphrase
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full bg-black border border-white p-4 text-[11px] font-bold uppercase tracking-widest focus:bg-white focus:text-black transition-all text-white placeholder-zinc-800"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-white text-black font-black py-5 text-[11px] uppercase tracking-[0.4em] hover:bg-zinc-200 transition-all disabled:opacity-20"
+          >
+            {loading ? "INITIALIZING..." : "CREATE_ACCOUNT"}
+          </button>
+        </form>
+
+        <div className="mt-12 text-center">
+          <Link
+            to="/login"
+            className="text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
+          >
+            Return to Identification
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;

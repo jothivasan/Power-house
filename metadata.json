@@ -1,0 +1,5 @@
+{
+  "name": "Powerhouse",
+  "description": "A high-performance, professional trading journal for disciplined traders. Track performance, analyze mistakes, and improve your edge with detailed statistics and AI-powered insights.",
+  "requestFramePermissions": ["camera"]
+}

@@ -1,0 +1,97 @@
+
+import { Trade } from './types';
+
+export const MOCK_TRADES: Trade[] = [
+  {
+    id: 'demo-1',
+    user_id: 'demo-user',
+    trade_date: '2024-11-20',
+    symbol: 'EURUSD',
+    market: 'Forex',
+    direction: 'Buy',
+    timeframe: 'H4',
+    entry_price: 1.0850,
+    exit_price: 1.0920,
+    stop_loss: 1.0820,
+    take_profit: 1.0950,
+    position_size: 1.0,
+    result: 'Win',
+    pnl: 700,
+    risk_reward: 2.33,
+    strategy: ['Price Action', 'Trend Following'],
+    // Adding missing confirmations property
+    confirmations: ['EMA Cross', 'Support/Resistance Bounce'],
+    mistakes: [],
+    notes: 'Clean bounce off H4 support level. Confluence with 200 EMA.',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'demo-2',
+    user_id: 'demo-user',
+    trade_date: '2024-11-21',
+    symbol: 'BTCUSDT',
+    market: 'Crypto',
+    direction: 'Sell',
+    timeframe: 'H1',
+    entry_price: 92000,
+    exit_price: 91000,
+    stop_loss: 93500,
+    take_profit: 88000,
+    position_size: 0.5,
+    result: 'Win',
+    pnl: 500,
+    risk_reward: 2.67,
+    strategy: ['Mean Reversion'],
+    // Adding missing confirmations property
+    confirmations: ['RSI Divergence'],
+    mistakes: [],
+    notes: 'Overextended on high timeframes. Bearish divergence on RSI.',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'demo-3',
+    user_id: 'demo-user',
+    trade_date: '2024-11-22',
+    symbol: 'XAUUSD',
+    market: 'Commodities',
+    direction: 'Buy',
+    timeframe: 'M15',
+    entry_price: 2650,
+    exit_price: 2640,
+    stop_loss: 2645,
+    take_profit: 2670,
+    position_size: 2.0,
+    result: 'Loss',
+    pnl: -200,
+    risk_reward: 4.0,
+    strategy: ['Breakout'],
+    // Adding missing confirmations property
+    confirmations: ['Volume Spike'],
+    mistakes: ['FOMO'],
+    notes: 'Chased the initial momentum. Stopped out by a liquidity sweep before the actual move.',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'demo-4',
+    user_id: 'demo-user',
+    trade_date: '2024-11-23',
+    symbol: 'SPX500',
+    market: 'Indices',
+    direction: 'Buy',
+    timeframe: 'H1',
+    entry_price: 5950,
+    exit_price: 5950,
+    stop_loss: 5930,
+    take_profit: 6000,
+    position_size: 0.1,
+    result: 'Breakeven',
+    pnl: 0,
+    risk_reward: 2.5,
+    strategy: ['Smart Money Concepts (SMC)'],
+    // Adding missing confirmations property
+    confirmations: ['Order Block', 'Fair Value Gap (FVG)'],
+    mistakes: ['Exit Early'],
+    notes: 'Closed at BE due to high impact news coming up. Correct decision as market spiked both ways.',
+    created_at: new Date().toISOString()
+  }
+];
