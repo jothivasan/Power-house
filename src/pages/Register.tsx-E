@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../services/supabase";
 
-const REGISTRATION_SECRET_CODE = "281301";
+const REGISTRATION_SECRET_CODE = import.meta.env.VITE_REGISTRATION_SECRET_CODE || "";
 
 const Register = () => {
   const [email, setEmail] = useState("");
